@@ -57,13 +57,13 @@ class MainActivity : ComponentActivity() {
         val chatsRef: DatabaseReference = database.getReference("Chats")
         val chat1 = mapOf(
             "chat_id" to "1", // Auto Increment는 클라이언트에서 관리하거나 서버 로직 구현 필요
-            "sender" to "John Doe",
+            "sender_id" to "e1234567",
             "message" to "Hello, how are you?",
             "timestamp" to System.currentTimeMillis()
         )
         val chat2 = mapOf(
             "chat_id" to "2",
-            "sender" to "Jane Smith",
+            "sender_id" to "e1122334",
             "message" to "Need help in room 101",
             "timestamp" to System.currentTimeMillis()
         )
