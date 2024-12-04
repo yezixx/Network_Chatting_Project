@@ -6,7 +6,7 @@
     android:id="@+id/chat_list_Layout">
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textView_Friend"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#212121"
