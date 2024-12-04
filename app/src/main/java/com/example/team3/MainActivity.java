@@ -17,10 +17,9 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
-        //xml확인용으로 해놓음. 아래부턴 로그인. /**/지우고 setConentView에 activity_login으로 바꿔서 사용할것
-        /*login_Btn = (android.widget.Button) findViewById(R.id.login_btn);
+        login_Btn = (android.widget.Button) findViewById(R.id.login_btn);
 
         et_login_ID = findViewById(R.id.login_Id);
         et_login_password = findViewById(R.id.login_password);
@@ -42,6 +41,6 @@ public class MainActivity extends AppCompatActivity{
                     //startActivity(intent);
                 }
             }
-        });*/
+        });
     }
 }

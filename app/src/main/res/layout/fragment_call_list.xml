@@ -10,7 +10,7 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:listitem="@layout/fragment_chat_room_line" >
+    tools:listitem="@layout/fragment_call_line" >
     <!-- tools:context=".클래스 이름" 나중에 클래스 이름 추가 -->
 
 </androidx.recyclerview.widget.RecyclerView>
