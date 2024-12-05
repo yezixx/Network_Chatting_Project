@@ -66,5 +66,5 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-    implementation("io.socket:socket.io-client:2.0.0")
+    implementation ("androidx.recyclerview:recyclerview:1.2.1")
 }
