@@ -12,6 +12,9 @@ import com.example.team3.client_chat.ChatActivity;
 import com.example.team3.client_chat.RequestLogin;
 import com.example.team3.client_chat.RequestLogin.LoginCallback;
 
+import java.net.Socket;  // Socket 클래스를 임포트
+import java.io.IOException;  // IOException 클래스를 임포트
+
 public class MainActivity extends AppCompatActivity {
 
     android.widget.Button login_Btn;
@@ -46,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
                             // 로그인 성공 시 처리
                             Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
 
+                            // 로그인 성공 후 서버 연결 (서버와의 연결 코드 추가)
+                            connectToServer();
+
                             // 로그인 성공 후 새로운 화면으로 이동 (예: ChatActivity)
                             Intent intent = new Intent(MainActivity.this, ChatActivity.class);
                             startActivity(intent);
@@ -60,5 +66,41 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void connectToServer() {
+        // 서버와 연결하는 부분
+        // 예를 들어, 클라이언트가 서버에 연결하는 코드 추가
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // 서버 IP와 포트를 정확히 입력하세요.
+                String serverIp = "192.168.0.24";
+                int serverPort = 3000;  // 예시 포트 번호
+
+                try {
+                    // 서버에 연결
+                    Socket socket = new Socket(serverIp, serverPort);
+                    if (socket.isConnected()) {
+                        // 연결 성공 메시지 출력
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(MainActivity.this, "서버에 연결되었습니다!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                } catch (IOException e) {
+                    // 서버 연결 실패 시 처리
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.this, "서버 연결 실패", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 }

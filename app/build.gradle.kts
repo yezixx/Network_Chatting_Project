@@ -78,5 +78,6 @@ dependencies {
 
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
 
-
+    implementation("org.java-websocket:Java-WebSocket:1.5.3")  // Java WebSocket 라이브러리 예시
+    
 }
