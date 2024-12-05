@@ -41,7 +41,7 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.activity_chat_window);
 
         // RecyclerView, Message 입력창, 전송 버튼 초기화
         mRecyclerView = findViewById(R.id.Chatting_recycler);
