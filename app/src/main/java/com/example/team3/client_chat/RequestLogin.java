@@ -34,12 +34,13 @@ public class RequestLogin {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     String storedPassword = dataSnapshot.child("password").getValue(String.class);
+                    String name = dataSnapshot.child("name").getValue(String.class); // 이름 가져오기
                     if (storedPassword != null && storedPassword.equals(password)) {
                         // 직원 로그인 성공
                         mainHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                callback.onSuccess("직원 로그인 성공");
+                                callback.onSuccess("직원 로그인 성공", name);
                             }
                         });
                     } else {
@@ -78,12 +79,13 @@ public class RequestLogin {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     String storedPassword = dataSnapshot.child("password").getValue(String.class);
+                    String name = dataSnapshot.child("name").getValue(String.class); // 이름 가져오기
                     if (storedPassword != null && storedPassword.equals(password)) {
                         // 환자 로그인 성공
                         mainHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                callback.onSuccess("환자 로그인 성공");
+                                callback.onSuccess("환자 로그인 성공", name);
                             }
                         });
                     } else {
@@ -121,7 +123,7 @@ public class RequestLogin {
 
     // 로그인 결과를 처리할 콜백 인터페이스
     public interface LoginCallback {
-        void onSuccess(String message);
+        void onSuccess(String message, String name);
         void onFailure(String errorMessage);
     }
 }
