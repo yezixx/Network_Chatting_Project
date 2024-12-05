@@ -41,10 +41,11 @@ public class EmergencyButton extends AppCompatActivity {
             }
         });
 
-        // 서버 연결
+
         connectToServer();
     }
 
+    //서버 연결
     private void connectToServer() {
         new Thread(() -> {
             try {
