@@ -6,7 +6,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,8 +17,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -66,11 +68,14 @@ public class ChatActivity extends AppCompatActivity {
                     while (true) {
                         String message = mIn.readLine();  // 서버로부터 메시지 받기
                         if (message != null) {
+                            // 현재 시간 구하기
+                            String currentTime = getCurrentTime();
+
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     // 받은 메시지를 RecyclerView에 추가
-                                    mMessageList.add(new Message("Server", message, "12:00"));
+                                    mMessageList.add(new Message("Server", message, currentTime));
                                     mAdapter.notifyItemInserted(mMessageList.size() - 1);
                                     mRecyclerView.scrollToPosition(mMessageList.size() - 1);  // 최신 메시지로 스크롤
                                 }
@@ -95,11 +100,14 @@ public class ChatActivity extends AppCompatActivity {
                         public void run() {
                             try {
                                 mOut.println(mUsername + ": " + message);  // 서버로 메시지 전송
+                                // 현재 시간 구하기
+                                String currentTime = getCurrentTime();
+
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         // 전송된 메시지를 RecyclerView에 추가
-                                        mMessageList.add(new Message(mUsername, message, "12:00"));
+                                        mMessageList.add(new Message(mUsername, message, currentTime));
                                         mAdapter.notifyItemInserted(mMessageList.size() - 1);
                                         mRecyclerView.scrollToPosition(mMessageList.size() - 1);  // 최신 메시지로 스크롤
                                     }
@@ -113,6 +121,12 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private String getCurrentTime() {
+        // 현재 시간 구하기
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        return sdf.format(new Date());  // 예: "12:30"
     }
 
     @Override
