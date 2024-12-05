@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     // 로그인 요청
                     new RequestLogin().sendLoginRequest(validEmail, password, new LoginCallback() {
                         @Override
-                        public void onSuccess(String message) {
+                        public void onSuccess(String message, String name) {
                             // 로그인 성공 시 처리
                             Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
 
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
                             // 로그인 성공 후 새로운 화면으로 이동 (예: ChatActivity)
                             Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+                            intent.putExtra("username", name); // 이름 전달
                             startActivity(intent);
                         }
 
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // 서버 IP와 포트를 정확히 입력하세요.
-                String serverIp = "192.168.0.24";
+                String serverIp = "192.168.219.105";
                 int serverPort = 3000;  // 예시 포트 번호
 
                 try {
