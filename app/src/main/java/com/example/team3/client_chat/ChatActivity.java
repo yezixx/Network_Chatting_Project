@@ -35,7 +35,7 @@ public class ChatActivity extends AppCompatActivity {
     private PrintWriter mOut;
     private BufferedReader mIn;
     private String mUsername;
-    private static final String SERVER_IP = "192.168.1.100";  // 서버 IP
+    private static final String SERVER_IP = "192.168.0.24";  // 서버 IP
     private static final int SERVER_PORT = 3000;  // 서버 포트
 
     @Override
