@@ -58,6 +58,7 @@ public class EmergencyButton extends AppCompatActivity {
         }).start();
     }
 
+    // 서버에 신호 보내기
     private void sendEmergencySignal() {
         if (socket == null || outputStream == null) {
             Toast.makeText(this, "서버와 연결되지 않았습니다.", Toast.LENGTH_LONG).show();
