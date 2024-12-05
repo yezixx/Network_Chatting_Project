@@ -22,7 +22,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
 
     @Override
     public ChatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chat_message, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_log, parent, false);
         return new ChatViewHolder(view);
     }
 
@@ -33,7 +33,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         holder.mTimeTextView.setText(message.getTime());
         holder.mSenderTextView.setText(message.getSender());
 
-        // 여기서 전송자의 이미지를 설정할 수 있습니다. 예시로 기본 이미지를 넣습니다.
         holder.mSenderImageView.setImageResource(R.drawable.person_img);
     }
 
