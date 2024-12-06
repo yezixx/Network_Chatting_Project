@@ -69,7 +69,7 @@ public class EmergencyButton extends AppCompatActivity {
 
         new Thread(() -> {
             try {
-                String signal = "EMERGENCY_CALL:" + patientId;
+                String signal = "EMERGENCY_CALL:" + patientId + ":긴급 호출 발생!";
                 outputStream.writeUTF(signal);
                 outputStream.flush();
                 runOnUiThread(() -> Toast.makeText(EmergencyButton.this, "긴급 호출 전송 성공", Toast.LENGTH_SHORT).show());
