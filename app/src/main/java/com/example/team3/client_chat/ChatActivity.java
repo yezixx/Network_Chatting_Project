@@ -35,7 +35,7 @@ public class ChatActivity extends AppCompatActivity {
     private PrintWriter mOut;
     private BufferedReader mIn;
     private String mUsername;
-    private static final String SERVER_IP = "192.168.1.100";  // 서버 IP
+    private static final String SERVER_IP = "192.168.219.105";  // 서버 IP
     private static final int SERVER_PORT = 3000;  // 서버 포트
 
     @Override
@@ -69,14 +69,17 @@ public class ChatActivity extends AppCompatActivity {
                     while (true) {
                         String message = mIn.readLine();  // 서버로부터 메시지 받기
                         if (message != null) {
-                            // 현재 시간 구하기
+                            String[] parts = message.split(": ", 2);  // 보낸 사람과 메시지 분리
+                            String sender = parts.length > 0 ? parts[0] : "Unknown";
+                            String msgContent = parts.length > 1 ? parts[1] : "";
+
                             String currentTime = getCurrentTime();
 
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     // 받은 메시지를 RecyclerView에 추가
-                                    mMessageList.add(new Message("Server", message, currentTime));
+                                    mMessageList.add(new Message(sender, msgContent, currentTime));
                                     mAdapter.notifyItemInserted(mMessageList.size() - 1);
                                     mRecyclerView.scrollToPosition(mMessageList.size() - 1);  // 최신 메시지로 스크롤
                                 }

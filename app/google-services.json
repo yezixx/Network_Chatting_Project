@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "904808969117",
+    "project_id": "chatting-bdc3a",
+    "storage_bucket": "chatting-bdc3a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:904808969117:android:1acc655db278a4034b3574",
+        "android_client_info": {
+          "package_name": "com.example.team3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAn3X47AlLpr7CwQ3bBjUnaDhfVTZavpQg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
