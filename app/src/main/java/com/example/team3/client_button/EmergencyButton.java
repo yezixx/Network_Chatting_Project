@@ -44,20 +44,19 @@ public class EmergencyButton extends AppCompatActivity {
         });
 
         // 서버 연결
-        connectToServer();
+        getSocket();
     }
 
-    private void connectToServer() {
-        new Thread(() -> {
-            try {
-                socket = new Socket(SERVER_IP, SERVER_PORT);
-                outputStream = new DataOutputStream(socket.getOutputStream());
-                runOnUiThread(() -> Toast.makeText(EmergencyButton.this, "서버 연결 성공", Toast.LENGTH_SHORT).show());
-            } catch (IOException e) {
-                runOnUiThread(() -> Toast.makeText(EmergencyButton.this, "서버 연결 실패", Toast.LENGTH_LONG).show());
-                e.printStackTrace();
+    public Socket getSocket(String serverIP, int serverPort) {
+        try {
+            // 서버와 연결
+            if (mSocket == null || mSocket.isClosed()) {
+                mSocket = new Socket(serverIP, serverPort); // 서버 IP와 포트 번호로 연결
             }
-        }).start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return mSocket;
     }
 
     // 서버에 신호 보내기
@@ -80,8 +79,7 @@ public class EmergencyButton extends AppCompatActivity {
         }).start();
     }
 
-    @Override
-    protected void onDestroy() {
+    public void endSocket() {
         super.onDestroy();
         try {
             if (socket != null && !socket.isClosed()) {
