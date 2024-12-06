@@ -47,16 +47,15 @@ public class EmergencyButton extends AppCompatActivity {
         getSocket();
     }
 
-    public Socket getSocket(String serverIP, int serverPort) {
-        try {
-            // 서버와 연결
-            if (mSocket == null || mSocket.isClosed()) {
-                mSocket = new Socket(serverIP, serverPort); // 서버 IP와 포트 번호로 연결
+    public void getSocket() {
+        new Thread(() -> {
+            try {
+                socket = new Socket(SERVER_IP, SERVER_PORT);
+                outputStream = new DataOutputStream(socket.getOutputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return mSocket;
+        }).start();
     }
 
     // 서버에 신호 보내기
