@@ -6,6 +6,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.team3.R;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.DataOutputStream;
@@ -13,7 +15,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class EmergencyButton extends AppCompatActivity {
-    private static final String SERVER_IP = "192.168.1.100";  // 서버 IP 주소
+    private static final String SERVER_IP = "192.168.219.105";  // 서버 IP 주소
     private static final int SERVER_PORT = 3000;              // 서버 포트 번호
 
     private String patientId;
