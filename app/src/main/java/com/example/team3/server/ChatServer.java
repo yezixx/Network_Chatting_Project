@@ -35,8 +35,8 @@ public class ChatServer {
         @Override
         public void run() {
             try {
-                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                out = new PrintWriter(socket.getOutputStream(), true);
+                in = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+                out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
 
                 synchronized (clientWriters) {
                     clientWriters.add(out);
