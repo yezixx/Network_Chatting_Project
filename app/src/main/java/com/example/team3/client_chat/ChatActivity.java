@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
@@ -62,8 +63,9 @@ public class ChatActivity extends AppCompatActivity {
             public void run() {
                 try {
                     mSocket = new Socket(SERVER_IP, SERVER_PORT);
-                    mOut = new PrintWriter(mSocket.getOutputStream(), true);
-                    mIn = new BufferedReader(new InputStreamReader(mSocket.getInputStream()));
+                    mOut = new PrintWriter(new OutputStreamWriter(mSocket.getOutputStream(), "UTF-8"), true);
+                    mIn = new BufferedReader(new InputStreamReader(mSocket.getInputStream(), "UTF-8"));
+
 
                     // 메시지 수신을 위한 무한 루프
                     while (true) {
