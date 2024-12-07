@@ -28,7 +28,7 @@ public class CallDoneActivity extends AppCompatActivity {
 
         // 환자 정보 표시
         TextView patientInfo = findViewById(R.id.patient_info);
-        patientInfo.setText("환자 ID: " + mPatientId + "\n정상적으로 호출되었습니다");
+        patientInfo.setText("환자 ID: " + mPatientId+"\n 환자 이름: "+mUsername+ "\n정상적으로 호출되었습니다");
 
         // 돌아가기 버튼 설정
         Button backButton = findViewById(R.id.back_btn);
