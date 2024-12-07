@@ -15,7 +15,6 @@ import com.example.team3.R;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -36,13 +35,17 @@ public class ChatActivity extends AppCompatActivity {
     private PrintWriter mOut;
     private BufferedReader mIn;
     private String mUsername;
-    private static final String SERVER_IP = "192.168.219.105";  // 서버 IP
+    private String mUserType;  // userType 추가
+    private static final String SERVER_IP = "192.168.219.101";  // 서버 IP
     private static final int SERVER_PORT = 3000;  // 서버 포트
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_window);
+
+        // Intent로 전달받은 데이터 초기화
+        mUserType = getIntent().getStringExtra("userType");
 
         // RecyclerView, Message 입력창, 전송 버튼 초기화
         mRecyclerView = findViewById(R.id.Chatting_recycler);

@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.Button;
 
+import com.example.team3.client_button.EmergencyButton;
 import com.example.team3.client_chat.ChatActivity;
 import com.example.team3.client_chat.RequestLogin;
 import com.example.team3.client_chat.RequestLogin.LoginCallback;
@@ -52,9 +53,25 @@ public class MainActivity extends AppCompatActivity {
                             // 로그인 성공 후 서버 연결 (서버와의 연결 코드 추가)
                             connectToServer();
 
-                            // 로그인 성공 후 새로운 화면으로 이동 (예: ChatActivity)
-                            Intent intent = new Intent(MainActivity.this, ChatActivity.class);
-                            intent.putExtra("username", name); // 이름 전달
+                            // username에 따라 다른 액티비티로 이동
+                            Intent intent; // Intent 선언
+                            if (name.toLowerCase().contains("doctor")) {
+                                // Doctor가 포함된 경우 ChatActivity로 이동
+                                intent = new Intent(MainActivity.this, ChatActivity.class);
+                                intent.putExtra("username", name); // 이름 전달
+                                intent.putExtra("userType", "doctor"); // 사용자 유형 전달
+                            } else if (name.toLowerCase().contains("patient")) {
+                                // Patient가 포함된 경우 EmergencyButton으로 이동
+                                intent = new Intent(MainActivity.this, EmergencyButton.class);
+                                intent.putExtra("username", name); // 이름 전달
+                                intent.putExtra("userType", "patient"); // 사용자 유형 전달
+                            } else {
+                                // 예상치 못한 경우 처리
+                                Toast.makeText(MainActivity.this, "적합한 사용자 유형이 아닙니다.", Toast.LENGTH_SHORT).show();
+                                return; // 예외 처리 후 종료
+                            }
+
+                            // 공통 실행: 액티비티 시작
                             startActivity(intent);
                         }
 
@@ -76,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // 서버 IP와 포트를 정확히 입력하세요.
-                String serverIp = "192.168.219.105";
+                String serverIp = "192.168.219.101";
                 int serverPort = 3000;  // 예시 포트 번호
 
                 try {

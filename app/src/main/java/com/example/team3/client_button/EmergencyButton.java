@@ -1,5 +1,6 @@
 package com.example.team3.client_button;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,17 +16,23 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class EmergencyButton extends AppCompatActivity {
-    private static final String SERVER_IP = "192.168.219.105";  // 서버 IP 주소
+    private static final String SERVER_IP = "192.168.219.101";  // 서버 IP 주소
     private static final int SERVER_PORT = 3000;              // 서버 포트 번호
 
     private String patientId;
     private Socket socket;
     private DataOutputStream outputStream;
+    private String mUsername;
+    private String mUserType;  // userType 추가
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call);  // XML 파일 연결
+
+        // Intent로 전달받은 데이터 초기화
+        mUsername = getIntent().getStringExtra("username");
+        mUserType = getIntent().getStringExtra("userType");
 
         patientId = getIntent().getStringExtra("PATIENT_ID");  // Login에서 전달받은 ID
 
@@ -70,7 +77,18 @@ public class EmergencyButton extends AppCompatActivity {
                 String signal = "EMERGENCY_CALL:" + patientId + ":긴급 호출 발생!";
                 outputStream.writeUTF(signal);
                 outputStream.flush();
-                runOnUiThread(() -> Toast.makeText(EmergencyButton.this, "긴급 호출 전송 성공", Toast.LENGTH_SHORT).show());
+
+                // 긴급 호출 성공 시 화면 전환
+                runOnUiThread(() -> {
+                    Toast.makeText(EmergencyButton.this, "긴급 호출 전송 성공", Toast.LENGTH_SHORT).show();
+
+                    // activity_call_done.xml로 이동
+                    Intent intent = new Intent(EmergencyButton.this, CallDoneActivity.class);
+                    intent.putExtra("username", mUsername); // 필요한 데이터 전달
+                    intent.putExtra("userType", mUserType);
+                    intent.putExtra("PATIENT_ID", patientId);
+                    startActivity(intent);
+                });
             } catch (IOException e) {
                 runOnUiThread(() -> Toast.makeText(EmergencyButton.this, "긴급 호출 전송 실패", Toast.LENGTH_LONG).show());
                 e.printStackTrace();
