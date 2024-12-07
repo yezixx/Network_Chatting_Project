@@ -36,7 +36,7 @@ public class ChatActivity extends AppCompatActivity {
     private BufferedReader mIn;
     private String mUsername;
     private String mUserType;  // userType 추가
-    private static final String SERVER_IP = "192.168.219.101";  // 서버 IP
+    private static final String SERVER_IP = "192.168.219.105";  // 서버 IP
     private static final int SERVER_PORT = 3000;  // 서버 포트
 
     @Override
@@ -74,14 +74,13 @@ public class ChatActivity extends AppCompatActivity {
                     while (true) {
                         String message = mIn.readLine();  // 서버로부터 메시지 받기
                         if (message != null) {
-                            if (message.startsWith("공지사항:")) {  // "공지사항:"으로 시작하는 메시지 처리
-                                String notice = message.substring(5).trim(); // "공지사항:" 이후의 내용을 추출
-
+                            if (message.contains("EMERGENCY_CALL:")) {  // "공지사항:"으로 시작하는 메시지 처리
+                                String notice = message.replace("EMERGENCY_CALL:", "").replace(":"," "); // "공지사항:" 이후의 내용을 추출
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         // 공지사항 메시지를 UI에 추가
-                                        mMessageList.add(new Message("공지", notice, getCurrentTime()));
+                                        mMessageList.add(new Message("server", notice, getCurrentTime(),1));
                                         mAdapter.notifyItemInserted(mMessageList.size() - 1);
                                         mRecyclerView.scrollToPosition(mMessageList.size() - 1);
                                     }
