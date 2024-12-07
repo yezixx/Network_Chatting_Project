@@ -94,7 +94,7 @@ public class ChatActivity extends AppCompatActivity {
                                             public void run() {
                                                 emergencyNoticeLayout.setVisibility(View.GONE);
                                             }
-                                        }, 100000);
+                                        }, 1000000);
                                     }
                                 });
                             } else { // 일반 메시지 처리
