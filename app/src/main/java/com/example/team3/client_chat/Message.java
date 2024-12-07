@@ -13,6 +13,11 @@ public class Message {
         this.sender = sender;
         this.message = message;
         this.time = time;
+    }
+    public Message(String sender, String message, String time, int type) {
+        this.sender = sender;
+        this.message = message;
+        this.time = time;
         this.type = type;
     }
 
