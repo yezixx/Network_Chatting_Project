@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                     // 로그인 요청
                     new RequestLogin().sendLoginRequest(validEmail, password, new LoginCallback() {
                         @Override
-                        public void onSuccess(String message, String name) {
+                        public void onSuccess(String message, String name, String id, String room) {
                             // 로그인 성공 시 처리
                             Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
 
@@ -59,11 +59,14 @@ public class MainActivity extends AppCompatActivity {
                                 // Doctor가 포함된 경우 ChatActivity로 이동
                                 intent = new Intent(MainActivity.this, ChatActivity.class);
                                 intent.putExtra("username", name); // 이름 전달
+                                intent.putExtra("EMPLOYEE_ID", id); // 아이디 전달
                                 intent.putExtra("userType", "doctor"); // 사용자 유형 전달
                             } else if (name.toLowerCase().contains("patient")) {
                                 // Patient가 포함된 경우 EmergencyButton으로 이동
                                 intent = new Intent(MainActivity.this, EmergencyButton.class);
                                 intent.putExtra("username", name); // 이름 전달
+                                intent.putExtra("PATIENT_ID", id); // 아이디 전달
+                                intent.putExtra("room", room); // 아이디 전달
                                 intent.putExtra("userType", "patient"); // 사용자 유형 전달
                             } else {
                                 // 예상치 못한 경우 처리
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // 서버 IP와 포트를 정확히 입력하세요.
-                String serverIp = "192.168.219.101";
+                String serverIp = "192.168.219.105";
                 int serverPort = 3000;  // 예시 포트 번호
 
                 try {
