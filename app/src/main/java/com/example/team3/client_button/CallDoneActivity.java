@@ -15,6 +15,7 @@ public class CallDoneActivity extends AppCompatActivity {
     private String mUsername;
     private String mUserType;
     private String mPatientId;
+    private String room;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,7 @@ public class CallDoneActivity extends AppCompatActivity {
         mUsername = getIntent().getStringExtra("username");
         mUserType = getIntent().getStringExtra("userType");
         mPatientId = getIntent().getStringExtra("PATIENT_ID");
+        room = getIntent().getStringExtra("room");
 
         // 환자 정보 표시
         TextView patientInfo = findViewById(R.id.patient_info);
@@ -40,6 +42,7 @@ public class CallDoneActivity extends AppCompatActivity {
                 intent.putExtra("username", mUsername);
                 intent.putExtra("userType", mUserType);
                 intent.putExtra("PATIENT_ID", mPatientId);
+                intent.putExtra("room", room);
                 startActivity(intent);
                 finish(); // 현재 Activity 종료
             }

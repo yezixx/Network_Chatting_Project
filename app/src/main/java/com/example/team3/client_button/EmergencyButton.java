@@ -15,10 +15,11 @@ import com.example.team3.client_button.CallDoneActivity;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 public class EmergencyButton extends AppCompatActivity {
-    private static final String SERVER_IP = "192.168.219.105";  // 서버 IP 주소
-    private static final int SERVER_PORT = 3000;               // 서버 포트 번호
+    private static final String SERVER_IP = "192.168.219.105";
+    private static final int SERVER_PORT = 3000;
 
     private String patientId;
     private Socket socket;
@@ -76,13 +77,8 @@ public class EmergencyButton extends AppCompatActivity {
 
         new Thread(() -> {
             try {
-                String signal = "EMERGENCY_CALL:" + room+"호 "+mUsername+"님" + ":긴급 호출 발생!";
-
-                // 문자열을 바이트 배열로 변환 (UTF-8 인코딩 사용)
-                byte[] signalBytes = signal.getBytes("UTF-8");  // UTF-8 인코딩 사용
-
-                // 바이트 배열 전송
-                outputStream.write(signalBytes);
+                String signal = "EMERGENCY_CALL:" + room + "호 " + mUsername + "님" + ":긴급 호출 발생!";
+                outputStream.write(signal.getBytes(StandardCharsets.UTF_8));
                 outputStream.flush();
 
                 // 긴급 호출 성공 시 화면 전환
@@ -91,11 +87,13 @@ public class EmergencyButton extends AppCompatActivity {
 
                     // activity_call_done.xml로 이동
                     Intent intent = new Intent(EmergencyButton.this, CallDoneActivity.class);
-                    intent.putExtra("username", mUsername); // 필요한 데이터 전달
+                    intent.putExtra("username", mUsername);
                     intent.putExtra("userType", mUserType);
                     intent.putExtra("PATIENT_ID", patientId);
+                    intent.putExtra("room", room);
                     startActivity(intent);
                 });
+
             } catch (IOException e) {
                 runOnUiThread(() -> Toast.makeText(EmergencyButton.this, "긴급 호출 전송 실패", Toast.LENGTH_LONG).show());
                 e.printStackTrace();
