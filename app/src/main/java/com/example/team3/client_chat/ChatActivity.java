@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
@@ -62,13 +63,27 @@ public class ChatActivity extends AppCompatActivity {
             public void run() {
                 try {
                     mSocket = new Socket(SERVER_IP, SERVER_PORT);
-                    mOut = new PrintWriter(mSocket.getOutputStream(), true);
-                    mIn = new BufferedReader(new InputStreamReader(mSocket.getInputStream()));
+                    mOut = new PrintWriter(new OutputStreamWriter(mSocket.getOutputStream(), "UTF-8"), true);
+                    mIn = new BufferedReader(new InputStreamReader(mSocket.getInputStream(), "UTF-8"));
+
 
                     // 메시지 수신을 위한 무한 루프
                     while (true) {
                         String message = mIn.readLine();  // 서버로부터 메시지 받기
                         if (message != null) {
+                            if (message.startsWith("공지사항:")) {  // "공지사항:"으로 시작하는 메시지 처리
+                                String notice = message.substring(5).trim(); // "공지사항:" 이후의 내용을 추출
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // 공지사항 메시지를 UI에 추가
+                                        mMessageList.add(new Message("공지", notice, getCurrentTime()));
+                                        mAdapter.notifyItemInserted(mMessageList.size() - 1);
+                                        mRecyclerView.scrollToPosition(mMessageList.size() - 1);
+                                    }
+                                });
+                            } else { // 일반 메시지 처리
                             String[] parts = message.split(": ", 2);  // 보낸 사람과 메시지 분리
                             String sender = parts.length > 0 ? parts[0] : "Unknown";
                             String msgContent = parts.length > 1 ? parts[1] : "";
@@ -84,6 +99,7 @@ public class ChatActivity extends AppCompatActivity {
                                     mRecyclerView.scrollToPosition(mMessageList.size() - 1);  // 최신 메시지로 스크롤
                                 }
                             });
+                            }
                         }
                     }
                 } catch (IOException e) {
