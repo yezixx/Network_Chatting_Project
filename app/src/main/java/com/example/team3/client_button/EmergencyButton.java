@@ -7,23 +7,25 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.team3.R;
-
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.team3.R;
+import com.example.team3.client_button.CallDoneActivity;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
 public class EmergencyButton extends AppCompatActivity {
-    private static final String SERVER_IP = "192.168.219.101";  // 서버 IP 주소
-    private static final int SERVER_PORT = 3000;              // 서버 포트 번호
+    private static final String SERVER_IP = "192.168.219.105";  // 서버 IP 주소
+    private static final int SERVER_PORT = 3000;               // 서버 포트 번호
 
     private String patientId;
     private Socket socket;
     private DataOutputStream outputStream;
     private String mUsername;
     private String mUserType;  // userType 추가
+    private String room;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class EmergencyButton extends AppCompatActivity {
         // Intent로 전달받은 데이터 초기화
         mUsername = getIntent().getStringExtra("username");
         mUserType = getIntent().getStringExtra("userType");
+        room = getIntent().getStringExtra("room");
 
         patientId = getIntent().getStringExtra("PATIENT_ID");  // Login에서 전달받은 ID
 
@@ -40,8 +43,7 @@ public class EmergencyButton extends AppCompatActivity {
         Button callButton = findViewById(R.id.call_btn);
 
         // 환자 정보를 설정
-        patientInfo.setText("환자 ID: " + patientId);
-
+        patientInfo.setText("환자 ID: " + patientId + "\n 환자 이름: " + mUsername);
         // 긴급 호출 버튼 클릭 이벤트 처리
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,8 +76,13 @@ public class EmergencyButton extends AppCompatActivity {
 
         new Thread(() -> {
             try {
-                String signal = "EMERGENCY_CALL:" + patientId + ":긴급 호출 발생!";
-                outputStream.writeUTF(signal);
+                String signal = "EMERGENCY_CALL:" + room+"호 "+mUsername+"님" + ":긴급 호출 발생!";
+
+                // 문자열을 바이트 배열로 변환 (UTF-8 인코딩 사용)
+                byte[] signalBytes = signal.getBytes("UTF-8");  // UTF-8 인코딩 사용
+
+                // 바이트 배열 전송
+                outputStream.write(signalBytes);
                 outputStream.flush();
 
                 // 긴급 호출 성공 시 화면 전환
