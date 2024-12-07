@@ -1,9 +1,12 @@
 package com.example.team3.client_chat;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -74,15 +77,24 @@ public class ChatActivity extends AppCompatActivity {
                     while (true) {
                         String message = mIn.readLine();  // 서버로부터 메시지 받기
                         if (message != null) {
+                            TextView emergencyNoticeText = findViewById(R.id.notice_text);
+                            LinearLayout emergencyNoticeLayout = findViewById(R.id.emergency_notice);
+
                             if (message.contains("EMERGENCY_CALL:")) {  // "공지사항:"으로 시작하는 메시지 처리
                                 String notice = message.replace("EMERGENCY_CALL:", "").replace(":"," "); // "공지사항:" 이후의 내용을 추출
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        // 공지사항 메시지를 UI에 추가
-                                        mMessageList.add(new Message("server", notice, getCurrentTime(),1));
-                                        mAdapter.notifyItemInserted(mMessageList.size() - 1);
-                                        mRecyclerView.scrollToPosition(mMessageList.size() - 1);
+                                        emergencyNoticeText.setText(notice);
+                                        emergencyNoticeLayout.setVisibility(View.VISIBLE);
+
+                                        // 일정 시간 후에 호출 메시지를 숨김 (예: 10분 후)
+                                        new Handler().postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                emergencyNoticeLayout.setVisibility(View.GONE);
+                                            }
+                                        }, 100000);
                                     }
                                 });
                             } else { // 일반 메시지 처리
