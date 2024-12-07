@@ -80,6 +80,7 @@ public class EmergencyButton extends AppCompatActivity {
                 String signal = "EMERGENCY_CALL:" + room + "호 " + mUsername + "님" + ":긴급 호출 발생!";
                 outputStream.write(signal.getBytes(StandardCharsets.UTF_8));
                 outputStream.flush();
+                socket.close(); // 메시지 전송 후 Socket 닫기
 
                 // 긴급 호출 성공 시 화면 전환
                 runOnUiThread(() -> {
