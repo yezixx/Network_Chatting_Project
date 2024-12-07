@@ -39,7 +39,7 @@ public class ChatActivity extends AppCompatActivity {
     private BufferedReader mIn;
     private String mUsername;
     private String mUserType;  // userType 추가
-    private static final String SERVER_IP = "192.168.219.105";  // 서버 IP
+    private static final String SERVER_IP = "192.168.219.110";  // 서버 IP
     private static final int SERVER_PORT = 3000;  // 서버 포트
 
     @Override

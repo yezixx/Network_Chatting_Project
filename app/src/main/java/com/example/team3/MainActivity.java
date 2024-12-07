@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // 서버 IP와 포트를 정확히 입력하세요.
-                String serverIp = "192.168.219.105";
+                String serverIp = "192.168.219.110";
                 int serverPort = 3000;  // 예시 포트 번호
 
                 try {

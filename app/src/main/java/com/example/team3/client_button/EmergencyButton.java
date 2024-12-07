@@ -18,7 +18,7 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 public class EmergencyButton extends AppCompatActivity {
-    private static final String SERVER_IP = "192.168.219.105";
+    private static final String SERVER_IP = "192.168.219.110";
     private static final int SERVER_PORT = 3000;
 
     private String patientId;
